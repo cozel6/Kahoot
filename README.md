@@ -14,13 +14,13 @@ A real-time multiplayer quiz game built as a university project for the Computer
 
 ## Tech Stack
 
-| Area | Technology |
-|---|---|
-| Backend | Python 3.11, FastAPI, SQLAlchemy 2.0, Alembic |
-| Frontend | React 18, TypeScript, Vite |
-| Database | PostgreSQL 16 |
-| Real-time | WebSocket (FastAPI native) |
-| Containerization | Docker, Docker Compose |
+| Area             | Technology                                    |
+| ---------------- | --------------------------------------------- |
+| Backend          | Python 3.11, FastAPI, SQLAlchemy 2.0, Alembic |
+| Frontend         | React 18, TypeScript, Vite                    |
+| Database         | PostgreSQL 16                                 |
+| Real-time        | WebSocket (FastAPI native)                    |
+| Containerization | Docker, Docker Compose                        |
 
 ## Architecture
 
@@ -60,7 +60,7 @@ Once all containers are healthy:
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:8000
 - API docs (Swagger): http://localhost:8000/docs
-- PostgreSQL: localhost:5432
+- PostgreSQL: localhost:5433
 
 To stop the stack:
 
