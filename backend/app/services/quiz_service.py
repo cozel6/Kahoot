@@ -17,8 +17,7 @@ class QuizService:
             correct = sum(1 for o in q.options if o.is_correct)
             if correct != 1:
                 raise ValueError(f"Question {q.text} must have exactly one correct option")
-        return await self.repo.create_quiz(quiz)
-    
+        return await self.repo.create(quiz)
     async def list_quizzes(self) -> Sequence[QuizModel]:
         return await self.repo.list()
     

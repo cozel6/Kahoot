@@ -2,7 +2,7 @@
 
 BASE_POINTS = 1000
 
-def calulate_points(
+def calculate_points(
         is_correct: bool,
         elapsed_ms: int,
         time_limit_ms: int

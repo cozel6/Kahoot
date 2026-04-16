@@ -32,6 +32,7 @@ class SessionRepository:
                     state=GameState.LOBBY
                 )
                 self.session.add(model)
+                model.players = []  # ensure players relationship is initialized
                 await self.session.flush()
                 return model
         raise Exception("Failed to generate a unique room code after multiple attempts.")
