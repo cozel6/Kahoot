@@ -35,6 +35,13 @@ async def create_quiz(payload: QuizCreate, db: DBSession) -> QuizOut:
         raise HTTPException(status.HTTP_422_UNPROCESSABLE_ENTITY, str(exc)) from exc
     return QuizOut.model_validate(model)
 
+@router.get("/", response_model=list[QuizSummary])
+async def list_quizzes(db: DBSession) -> list[QuizSummary]:
+    service = QuizService(db)
+    quizzes = await service.list_quizzes()
+    return [QuizSummary.model_validate(q) for q in quizzes]
+
+
 @router.get("/{quiz_id}", response_model=QuizOut)
 async def get_quiz(quiz_id: int, db: DBSession) -> QuizOut:
     service = QuizService(db)
