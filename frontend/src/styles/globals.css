@@ -1,0 +1,192 @@
+@import "./theme.css";
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; font-family: var(--font); background: var(--color-purple); color: var(--color-white); }
+
+#root { height: 100%; }
+
+/* Layout */
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.page--top { justify-content: flex-start; padding-top: 2rem; }
+
+/* Card */
+.card {
+  background: var(--color-white);
+  color: var(--color-gray-800);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+}
+.card__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: var(--color-purple);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: opacity 0.15s, transform 0.1s;
+  width: 100%;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn--primary { background: var(--color-purple); color: var(--color-white); }
+.btn--secondary { background: var(--color-gray-200); color: var(--color-gray-800); }
+.btn--danger { background: var(--color-red); color: var(--color-white); }
+.btn--success { background: var(--color-green); color: var(--color-white); }
+.btn--sm { padding: 0.4rem 0.75rem; font-size: 0.85rem; width: auto; }
+
+/* Input */
+.input-group { margin-bottom: 1rem; }
+.input-label { display: block; margin-bottom: 0.5rem; font-weight: 600; font-size: 0.9rem; color: var(--color-gray-600); }
+.input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius);
+  border: 2px solid var(--color-gray-200);
+  font-size: 1rem;
+  font-family: var(--font);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input:focus { border-color: var(--color-purple); }
+.error-text { color: var(--color-red); font-size: 0.85rem; margin-top: 0.25rem; }
+
+/* Answer grid */
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+  max-width: 640px;
+  padding: 1rem;
+}
+.answer-btn {
+  padding: 1.5rem 1rem;
+  border-radius: var(--radius-lg);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-white);
+  border: none;
+  cursor: pointer;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  word-break: break-word;
+  transition: opacity 0.15s, transform 0.1s;
+}
+.answer-btn:active { transform: scale(0.97); }
+.answer-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.answer-btn--0 { background: var(--answer-0); }
+.answer-btn--1 { background: var(--answer-1); }
+.answer-btn--2 { background: var(--answer-2); }
+.answer-btn--3 { background: var(--answer-3); }
+.answer-btn--correct { box-shadow: 0 0 0 4px #fff, 0 0 0 8px #26890c; }
+.answer-btn--wrong { opacity: 0.35; }
+
+/* Timer */
+.timer { font-size: 2.5rem; font-weight: 900; text-align: center; line-height: 1; }
+.timer-bar { width: 100%; max-width: 640px; height: 12px; background: rgba(255,255,255,0.3); border-radius: 999px; overflow: hidden; }
+.timer-bar__fill { height: 100%; background: var(--color-yellow); border-radius: 999px; transition: width 0.1s linear; }
+
+/* Leaderboard */
+.leaderboard { width: 100%; max-width: 480px; list-style: none; }
+.leaderboard__item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255,255,255,0.15);
+  border-radius: var(--radius);
+  margin-bottom: 0.5rem;
+}
+.leaderboard__rank { font-size: 1.2rem; font-weight: 900; min-width: 2rem; text-align: center; }
+.leaderboard__nickname { flex: 1; font-weight: 600; }
+.leaderboard__score { font-weight: 700; font-size: 1.1rem; }
+
+/* Room code */
+.room-code {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 0.2em;
+  text-align: center;
+  background: var(--color-white);
+  color: var(--color-purple);
+  padding: 1rem 2rem;
+  border-radius: var(--radius-lg);
+  margin: 1rem 0;
+}
+
+/* Question */
+.question-counter { font-size: 0.9rem; opacity: 0.8; margin-bottom: 0.5rem; text-align: center; }
+.question-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+  background: rgba(255,255,255,0.15);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 640px;
+  margin-bottom: 1rem;
+}
+
+/* Players list */
+.players-list { list-style: none; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; justify-content: center; }
+.players-list__item { background: rgba(255,255,255,0.2); padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.9rem; font-weight: 600; }
+
+/* Quiz editor */
+.quiz-editor { width: 100%; max-width: 640px; margin: 0 auto; }
+.question-block { background: rgba(255,255,255,0.1); border-radius: var(--radius-lg); padding: 1rem; margin-bottom: 1rem; }
+.question-block__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
+.option-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem; }
+.quiz-list { list-style: none; width: 100%; max-width: 480px; }
+.quiz-list__item { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.15); border-radius: var(--radius); padding: 0.75rem 1rem; margin-bottom: 0.5rem; }
+.quiz-list__title { font-weight: 600; }
+.quiz-list__actions { display: flex; gap: 0.5rem; }
+
+/* Utility */
+.title { font-size: 2rem; font-weight: 900; text-align: center; margin-bottom: 1rem; }
+.subtitle { font-size: 1rem; opacity: 0.8; text-align: center; margin-bottom: 1rem; }
+.stack { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; }
+.text-center { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.result-icon { font-size: 3rem; text-align: center; margin-bottom: 0.5rem; }
+
+.waiting-text {
+  font-size: 1.2rem;
+  opacity: 0.8;
+  text-align: center;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
