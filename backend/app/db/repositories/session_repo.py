@@ -13,7 +13,7 @@ from app.db.models import (
 from app.domain.game_session import GameState
 
 class SessionRepository:
-    MAX_CODE_ATTEMPTS = 10 # if needed, value should be 5 or less to avoid performance issues
+    MAX_CODE_ATTEMPTS = 10
     
     def __init__(self, session: AsyncSession) -> None:
         self.session = session
@@ -32,7 +32,7 @@ class SessionRepository:
                     state=GameState.LOBBY
                 )
                 self.session.add(model)
-                model.players = []  # ensure players relationship is initialized
+                model.players = []
                 await self.session.flush()
                 return model
         raise Exception("Failed to generate a unique room code after multiple attempts.")

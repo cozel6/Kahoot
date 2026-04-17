@@ -18,11 +18,11 @@ class Question:
     time_limit_ms: int = 20_000
 
     @property
-    def correct_indesx(self):
-        for inx,opt in enumerate(self.options):
+    def correct_index(self) -> int:
+        for inx, opt in enumerate(self.options):
             if opt.is_correct:
                 return inx
-            raise ValueError("Questions must have at least one correct answer option")
+        raise ValueError("Questions must have at least one correct answer option")
         
 @dataclass(slots=True)
 class Quiz:

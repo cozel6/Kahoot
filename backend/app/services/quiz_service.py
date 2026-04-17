@@ -24,5 +24,5 @@ class QuizService:
     async def get_quiz(self, quiz_id: int) -> QuizModel | None:
         return await self.repo.get_by_id(quiz_id)
     
-    async def delete_quiz(self, quiz_id: int) -> None:
-        await self.repo.delete_quiz(quiz_id)
+    async def delete_quiz(self, quiz_id: int) -> bool:
+        return await self.repo.delete(quiz_id)

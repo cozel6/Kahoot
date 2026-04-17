@@ -29,7 +29,7 @@ class PlayerJoinedMsg(BaseModel):
 
 
 class QuestionOptionView(BaseModel):
-    """Ce VEDE playerul — FĂRĂ `is_correct`."""
+    """What the player SEES — WITHOUT `is_correct`."""
     text: str
 
 

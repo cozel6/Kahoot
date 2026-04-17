@@ -43,7 +43,11 @@ class QuizRepository:
         )
         return await self.session.scalar(stmt)
     
-    async def delete(self, quiz_id:int) -> None:
+    async def list(self) -> Sequence[QuizModel]:
+        result = await self.session.scalars(select(QuizModel))
+        return result.all()
+
+    async def delete(self, quiz_id: int) -> bool:
         model = await self.session.get(QuizModel, quiz_id)
         if model is None:
             return False

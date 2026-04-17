@@ -11,7 +11,7 @@ from app.core.config import get_settings
 settings = get_settings()
 
 class Base(DeclarativeBase):
-    """"Base class for SQLAlchemy models."""
+    """Base class for SQLAlchemy models."""
     
 engine = create_async_engine(
     settings.DATABASE_URL,
@@ -27,7 +27,7 @@ AsyncSessionLocal = async_sessionmaker(
 )
 
 async def get_session() -> AsyncIterator[AsyncSession]:
-    """"Dependency FastAPI: one session per request, with commit/rollback automatic."""
+    """FastAPI dependency: one session per request, auto commit/rollback."""
     async with AsyncSessionLocal() as session:
         try:
             yield session

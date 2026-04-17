@@ -13,7 +13,7 @@ from app.services.scoring_service import calculate_points
 class AnswerResult:
     is_correct: bool
     points_awarded: int
-    points: int
+    total_score: int
 
 class GameServiceError(Exception):
     """Invalid flow: operation not allowed in current game state"""

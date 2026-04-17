@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import health, quizzes, rooms
+from app.api.ws import game_ws
 from app.core.config import get_settings
 
 settings = get_settings()
@@ -23,3 +24,4 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(quizzes.router)
 app.include_router(rooms.router)
+app.include_router(game_ws.router)
