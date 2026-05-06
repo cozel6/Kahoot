@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, ApiError } from "@/services/api";
+import { useToastStore } from "@/store/toastStore";
 import type { AnswerOptionIn, QuestionIn, QuizCreate } from "@/types/quiz";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
@@ -15,9 +16,9 @@ const makeQuestion = (): QuestionIn => ({
 
 export function QuizEditPage() {
   const navigate = useNavigate();
+  const addToast = useToastStore((s) => s.addToast);
   const [title, setTitle] = useState("");
   const [questions, setQuestions] = useState<QuestionIn[]>([makeQuestion()]);
-  const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
   function updateQuestion(qi: number, patch: Partial<QuestionIn>) {
@@ -52,15 +53,14 @@ export function QuizEditPage() {
   }
 
   async function handleSave() {
-    setError(null);
-    if (!title.trim()) { setError("Quiz title is required."); return; }
+    if (!title.trim()) { addToast("Quiz title is required."); return; }
     const payload: QuizCreate = { title: title.trim(), questions };
     setSaving(true);
     try {
       await api.createQuiz(payload);
       navigate("/quizzes");
     } catch (e) {
-      setError(e instanceof ApiError ? `Error ${e.status}: ${e.message}` : String(e));
+      addToast(e instanceof ApiError ? `Error ${e.status}: ${e.message}` : String(e));
     } finally {
       setSaving(false);
     }
@@ -72,8 +72,6 @@ export function QuizEditPage() {
     <div className="page page--top">
       <div className="quiz-editor">
         <h1 className="title">New Quiz</h1>
-        {error && <p className="error-text mb-2">{error}</p>}
-
         <Input
           label="Quiz title"
           value={title}

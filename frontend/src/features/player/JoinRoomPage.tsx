@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api, ApiError } from "@/services/api";
 import { useRoomStore } from "@/store/roomStore";
+import { useToastStore } from "@/store/toastStore";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Card } from "@/components/ui/Card";
@@ -9,22 +10,21 @@ import { Card } from "@/components/ui/Card";
 export function JoinRoomPage() {
   const navigate = useNavigate();
   const setRoom = useRoomStore((s) => s.setRoom);
+  const addToast = useToastStore((s) => s.addToast);
   const [code, setCode] = useState("");
   const [nickname, setNickname] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function handleJoin() {
-    setError(null);
-    if (!code.trim()) { setError("Room code is required."); return; }
-    if (!nickname.trim()) { setError("Nickname is required."); return; }
+    if (!code.trim()) { addToast("Room code is required."); return; }
+    if (!nickname.trim()) { addToast("Nickname is required."); return; }
     setLoading(true);
     try {
       const res = await api.joinRoom(code.trim().toUpperCase(), nickname.trim());
       setRoom(res.room.code, "player", res.player.id);
       navigate(`/player/lobby/${res.room.code}`);
     } catch (e) {
-      setError(e instanceof ApiError ? `Error ${e.status}: ${e.message}` : String(e));
+      addToast(e instanceof ApiError ? `Error ${e.status}: ${e.message}` : String(e));
     } finally {
       setLoading(false);
     }
@@ -33,7 +33,6 @@ export function JoinRoomPage() {
   return (
     <div className="page">
       <Card title="Join a Game">
-        {error && <p className="error-text mb-2">{error}</p>}
         <Input
           id="code"
           label="Room Code"

@@ -9,10 +9,12 @@ import { JoinRoomPage } from "@/features/player/JoinRoomPage";
 import { PlayerLobbyPage } from "@/features/player/PlayerLobbyPage";
 import { PlayerGamePage } from "@/features/player/PlayerGamePage";
 import { PlayerResultsPage } from "@/features/player/PlayerResultsPage";
+import { ToastContainer } from "@/components/ui/Toast";
 
 export function App() {
   return (
     <BrowserRouter>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/quizzes" element={<QuizListPage />} />

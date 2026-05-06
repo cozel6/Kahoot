@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "@/services/api";
+import { useToastStore } from "@/store/toastStore";
 import type { QuizSummary } from "@/types/quiz";
 import { Button } from "@/components/ui/Button";
 
 export function QuizListPage() {
   const navigate = useNavigate();
+  const addToast = useToastStore((s) => s.addToast);
   const [quizzes, setQuizzes] = useState<QuizSummary[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [creating, setCreating] = useState<number | null>(null);
 
   useEffect(() => {
     api
       .listQuizzes()
       .then(setQuizzes)
-      .catch((e: unknown) => setError(String(e)))
+      .catch((e: unknown) => addToast(String(e)))
       .finally(() => setLoading(false));
   }, []);
 
@@ -25,7 +26,7 @@ export function QuizListPage() {
       const room = await api.createRoom(quizId);
       navigate(`/host/lobby/${room.code}`);
     } catch (e) {
-      setError(String(e));
+      addToast(String(e));
       setCreating(null);
     }
   }
@@ -36,7 +37,7 @@ export function QuizListPage() {
       await api.deleteQuiz(quizId);
       setQuizzes((prev) => prev.filter((q) => q.id !== quizId));
     } catch (e) {
-      setError(String(e));
+      addToast(String(e));
     }
   }
 
@@ -45,7 +46,6 @@ export function QuizListPage() {
   return (
     <div className="page page--top">
       <h1 className="title">My Quizzes</h1>
-      {error && <p className="error-text mb-2">{error}</p>}
       {quizzes.length === 0 ? (
         <p className="subtitle">No quizzes yet. Create one below.</p>
       ) : (

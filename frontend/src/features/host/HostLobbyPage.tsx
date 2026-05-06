@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GameSocket } from "@/services/socket";
 import { useGameStore } from "@/store/gameStore";
 import { useRoomStore } from "@/store/roomStore";
+import { useToastStore } from "@/store/toastStore";
 import type { ServerWsMessage } from "@/types/ws-messages";
 import { Button } from "@/components/ui/Button";
 
@@ -10,7 +11,7 @@ export function HostLobbyPage() {
   const { code } = useParams<{ code: string }>();
   const navigate = useNavigate();
   const socketRef = useRef<GameSocket | null>(null);
-  const [wsError, setWsError] = useState<string | null>(null);
+  const addToast = useToastStore((s) => s.addToast);
   const [starting, setStarting] = useState(false);
 
   const players = useGameStore((s) => s.players);
@@ -34,7 +35,7 @@ export function HostLobbyPage() {
         setQuestion(msg);
         navigate(`/host/game/${code}`);
       } else if (msg.type === "error") {
-        setWsError(msg.message);
+        addToast(msg.message);
         setStarting(false);
       }
     });
@@ -53,7 +54,6 @@ export function HostLobbyPage() {
       <h1 className="title">Room Code</h1>
       <div className="room-code">{code}</div>
       <p className="subtitle">Share this code with your players</p>
-      {wsError && <p className="error-text mb-2">{wsError}</p>}
       <p className="subtitle">{players.length} player(s) joined</p>
       <ul className="players-list">
         {players.map((p) => (
